@@ -1,0 +1,17 @@
+name: Java Maven 持续集成环境
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  ci-base-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取项目代码
+        uses: actions/checkout@v4
+      - name: 配置JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
