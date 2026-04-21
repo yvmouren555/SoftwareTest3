@@ -17,10 +17,22 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 实验要求：执行test目标，完成冒烟测试
+      # 配置Maven国内镜像，加速依赖下载
+      - name: 配置Maven镜像
+        run: |
+          mkdir -p ~/.m2
+          echo '<settings>
+            <mirrors>
+              <mirror>
+                <id>aliyunmaven</id>
+                <mirrorOf>central</mirrorOf>
+                <url>https://maven.aliyun.com/repository/public</url>
+              </mirror>
+            </mirrors>
+          </settings>' > ~/.m2/settings.xml
+
       - name: 执行Maven Test 冒烟测试
         run: mvn clean test
 
-      # 实验要求：执行build目标，打包生成jar包
       - name: 执行Maven Build 打包构建
         run: mvn clean package
