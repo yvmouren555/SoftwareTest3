@@ -4,14 +4,23 @@ on:
     branches: [ main, master ]
 
 jobs:
-  ci-base-task:
+  ci-full-task:
     runs-on: ubuntu-latest
     steps:
       - name: 拉取项目代码
         uses: actions/checkout@v4
+
       - name: 配置JDK 8
         uses: actions/setup-java@v4
         with:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
+
+      # 实验要求：执行test目标，完成冒烟测试
+      - name: 执行Maven Test 冒烟测试
+        run: mvn clean test
+
+      # 实验要求：执行build目标，打包生成jar包
+      - name: 执行Maven Build 打包构建
+        run: mvn clean package
